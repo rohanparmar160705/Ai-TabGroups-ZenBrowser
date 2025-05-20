@@ -676,7 +676,7 @@
                   console.warn("Could not find separator element to apply sorting indicator.");
              }
 
-            const currentWorkspaceId = window.gZenWorkspaces?.activeWorkspace;
+            const currentWorkspaceId = window.ZenWorkspaces?.activeWorkspace;
             if (!currentWorkspaceId) {
                 console.error("Cannot get current workspace ID.");
                 // No need to set isSorting = false here, finally block handles it
@@ -1095,7 +1095,7 @@
         console.log("Clearing tabs...");
         let closedCount = 0;
         try {
-            const currentWorkspaceId = window.gZenWorkspaces?.activeWorkspace;
+            const currentWorkspaceId = window.ZenWorkspaces?.activeWorkspace;
             if (!currentWorkspaceId) {
                 console.error("CLEAR BTN: Cannot get current workspace ID.");
                 return;
@@ -1251,32 +1251,32 @@
     }
 
 
-    // --- gZenWorkspaces Hooks ---
+    // --- ZenWorkspaces Hooks ---
 
     function setupZenWorkspaceHooks() {
-        if (typeof gZenWorkspaces === 'undefined') {
-            console.warn("BUTTONS: gZenWorkspaces object not found. Skipping hook setup. Ensure Zen Tab Organizer loads first.");
+        if (typeof ZenWorkspaces === 'undefined') {
+            console.warn("BUTTONS: ZenWorkspaces object not found. Skipping hook setup. Ensure Zen Tab Organizer loads first.");
             return;
         }
         // Avoid applying hooks multiple times
-        if (typeof gZenWorkspaces.originalHooks !== 'undefined') {
+        if (typeof ZenWorkspaces.originalHooks !== 'undefined') {
             console.log("BUTTONS HOOK: Hooks already seem to be applied. Skipping re-application.");
             return;
         }
 
-        console.log("BUTTONS HOOK: Applying gZenWorkspaces hooks...");
+        console.log("BUTTONS HOOK: Applying ZenWorkspaces hooks...");
         // Store original functions before overwriting
-        gZenWorkspaces.originalHooks = {
-            onTabBrowserInserted: gZenWorkspaces.onTabBrowserInserted,
-            updateTabsContainers: gZenWorkspaces.updateTabsContainers,
+        ZenWorkspaces.originalHooks = {
+            onTabBrowserInserted: ZenWorkspaces.onTabBrowserInserted,
+            updateTabsContainers: ZenWorkspaces.updateTabsContainers,
         };
 
         // Hook into onTabBrowserInserted (called when workspace elements are likely created/updated)
-        gZenWorkspaces.onTabBrowserInserted = function(event) {
+        ZenWorkspaces.onTabBrowserInserted = function(event) {
             // Call the original function first
-            if (typeof gZenWorkspaces.originalHooks.onTabBrowserInserted === 'function') {
+            if (typeof ZenWorkspaces.originalHooks.onTabBrowserInserted === 'function') {
                 try {
-                    gZenWorkspaces.originalHooks.onTabBrowserInserted.call(gZenWorkspaces, event);
+                    ZenWorkspaces.originalHooks.onTabBrowserInserted.call(ZenWorkspaces, event);
                 } catch (e) {
                     console.error("BUTTONS HOOK: Error in original onTabBrowserInserted:", e);
                 }
@@ -1286,11 +1286,11 @@
         };
 
         // Hook into updateTabsContainers (called on various workspace/tab changes)
-        gZenWorkspaces.updateTabsContainers = function(...args) {
+        ZenWorkspaces.updateTabsContainers = function(...args) {
              // Call the original function first
-            if (typeof gZenWorkspaces.originalHooks.updateTabsContainers === 'function') {
+            if (typeof ZenWorkspaces.originalHooks.updateTabsContainers === 'function') {
                 try {
-                    gZenWorkspaces.originalHooks.updateTabsContainers.apply(gZenWorkspaces, args);
+                    ZenWorkspaces.originalHooks.updateTabsContainers.apply(ZenWorkspaces, args);
                 } catch (e) {
                     console.error("BUTTONS HOOK: Error in original updateTabsContainers:", e);
                 }
@@ -1298,7 +1298,7 @@
             // Add buttons after a short delay
             setTimeout(addButtonsToAllSeparators, 150); // Slightly increased delay for safety
         };
-        console.log("BUTTONS HOOK: gZenWorkspaces hooks applied successfully.");
+        console.log("BUTTONS HOOK: ZenWorkspaces hooks applied successfully.");
     }
 
 
@@ -1318,7 +1318,7 @@
             const peripheryExists = !!document.querySelector('#tabbrowser-arrowscrollbox-periphery');
             const commandSetExists = !!document.querySelector("commandset#zenCommandSet");
             const gBrowserReady = typeof gBrowser !== 'undefined' && gBrowser.tabContainer;
-            const zenWorkspacesReady = typeof gZenWorkspaces !== 'undefined' && typeof gZenWorkspaces.activeWorkspace !== 'undefined';
+            const zenWorkspacesReady = typeof ZenWorkspaces !== 'undefined' && typeof ZenWorkspaces.activeWorkspace !== 'undefined';
 
             const ready = gBrowserReady && commandSetExists && (separatorExists || peripheryExists) && zenWorkspacesReady;
 
@@ -1357,7 +1357,7 @@
                     zenWorkspacesReady
                 });
                 // Provide specific feedback
-                 if (!zenWorkspacesReady) console.error(" -> gZenWorkspaces might not be fully initialized yet (activeWorkspace missing?). Ensure Zen Tab Organizer extension is loaded and enabled BEFORE this script runs.");
+                 if (!zenWorkspacesReady) console.error(" -> ZenWorkspaces might not be fully initialized yet (activeWorkspace missing?). Ensure Zen Tab Organizer extension is loaded and enabled BEFORE this script runs.");
                  if (!separatorExists && !peripheryExists) console.error(" -> Neither separator element '.vertical-pinned-tabs-container-separator' nor fallback periphery '#tabbrowser-arrowscrollbox-periphery' found in the DOM.");
                  if (!commandSetExists) console.error(" -> Command set '#zenCommandSet' not found. Ensure Zen Tab Organizer extension is loaded and enabled.");
                  if (!gBrowserReady) console.error(" -> Global 'gBrowser' object not ready.");
