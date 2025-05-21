@@ -1,6 +1,5 @@
 # ✨ AI Tab Groups for Zen Browser ✨
-‼️This is still Work-in-Progress ‼️
-
+‼️ Breaks for Zen version <1.12.6b, Please use the latest script.
 https://github.com/user-attachments/assets/fc792843-b1da-448e-ba00-63322a3d9c99
 
 ## Pre-requisites
