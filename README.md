@@ -27,12 +27,31 @@ https://github.com/user-attachments/assets/fc792843-b1da-448e-ba00-63322a3d9c99
 - Open Zen browser, go to `about:support` and clear start up cache.
 - Done. Enjoy ^^
 
+
 ## How it works?
-- The script has two phases, first it manually sorts tabs that have common words in their title and url, second it uses the ai to sort rest of the tab and see if they fit in the existing groups (that were manually created) or should it create a new group.
-- The script only fetches the tabs full url and title, thus it prioritizes the title first for main context and url for sub context.
-- The sort function only works when the cateogry has 2 or more tabs to sort into a group
-- You are free to change the ai prompt to your suitable workflow. The prompt is at the top in `apiConfig`.
-- The Clear button only clears un-grouped nonpinned tabs.
+
+The script uses a more sophisticated multi-stage process to group your tabs:
+
+1.  **Phase 1: Deterministic Pre-Grouping (Strong Signals):**
+    *   **Opened From Same Tab:** Groups tabs that were opened from the same parent tab.
+    *   **Content Type:** Identifies common content types (e.g., "Dev Docs", "Spreadsheet", "Social Media") based on URL and title patterns, then groups them.
+    *   **Keywords & Hostnames:** Groups tabs sharing common keywords in their titles or identical hostnames (e.g., "github.com").
+
+2.  **Phase 2: Similarity-Based Pre-Grouping (TF-IDF):**
+    *   For tabs not caught by Phase 1, it analyzes the text content (title and description) using **TF-IDF** (Term Frequency-Inverse Document Frequency) and **Cosine Similarity**.
+    *   Tabs with highly similar text content are grouped together.
+
+3.  **Phase 3: AI-Powered Grouping:**
+    *   Any tabs *still* ungrouped are sent to the configured AI (Gemini or Ollama).
+    *   The AI is given the context of all previously formed groups (from Phase 1 & 2) and suggests categories for the remaining tabs, either fitting them into existing groups or proposing new ones.
+
+4.  **Consolidation:**
+    *   Finally, all generated group names are checked for near-duplicates (e.g., "Project Doc" and "Project Docs") using Levenshtein distance, and similar names are merged to ensure consistency.
+
+*   The script primarily uses tab titles, URLs, and descriptions for context.
+*   Groups are generally formed if they meet a minimum tab count (default is 2), though AI-derived groups might be created for single important tabs.
+*   You can customize AI prompts and other settings in the configuration.
+*   The "Clear" button only clears ungrouped, non-pinned tabs in the current workspace.
 
 **Peace <3**
 
