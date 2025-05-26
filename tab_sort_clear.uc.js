@@ -10,12 +10,39 @@
     const GEMINI_API_KEY_PREF = "extensions.tabgroups.gemini_api_key";
     const GEMINI_MODEL_PREF = "extensions.tabgroups.gemini_model";
 
+    // Helper function to read preferences with fallbacks
+    const getPref = (prefName, defaultValue = "") => {
+        try {
+            const prefService = Services.prefs;
+            if (prefService.prefHasUserValue(prefName)) {
+                switch (prefService.getPrefType(prefName)) {
+                    case prefService.PREF_STRING:
+                        return prefService.getStringPref(prefName);
+                    case prefService.PREF_INT:
+                        return prefService.getIntPref(prefName);
+                    case prefService.PREF_BOOL:
+                        return prefService.getBoolPref(prefName);
+                }
+            }
+        } catch (e) {
+            console.warn(`Failed to read preference ${prefName}:`, e);
+        }
+        return defaultValue;
+    };
+
+    // Read preference values
+    const AI_MODEL_VALUE = getPref(AI_MODEL_PREF, "1"); // Default to Gemini
+    const OLLAMA_ENDPOINT_VALUE = getPref(OLLAMA_ENDPOINT_PREF, "http://localhost:11434/api/generate");
+    const OLLAMA_MODEL_VALUE = getPref(OLLAMA_MODEL_PREF, "llama3.2");
+    const GEMINI_API_KEY_VALUE = getPref(GEMINI_API_KEY_PREF, "");
+    const GEMINI_MODEL_VALUE = getPref(GEMINI_MODEL_PREF, "gemini-1.5-flash");
+
     const CONFIG = {
         apiConfig: {
             ollama: {
-                endpoint: OLLAMA_ENDPOINT_PREF,
-                enabled: AI_MODEL_PREF == 2,
-                model: OLLAMA_MODEL_PREF,
+                endpoint: OLLAMA_ENDPOINT_VALUE,
+                enabled: AI_MODEL_VALUE == "2",
+                model: OLLAMA_MODEL_VALUE,
                 promptTemplateBatch: `Analyze the following numbered list of tab data (Title, URL, Description) and assign a concise category (1-2 words, Title Case) for EACH tab.
 
                 Existing Categories (Use these EXACT names if a tab fits):
@@ -46,9 +73,9 @@
                 Output:`
             },
             gemini: {
-                enabled: AI_MODEL_PREF == 1,
-                apiKey: GEMINI_API_KEY_PREF,
-                model: GEMINI_MODEL_PREF,
+                enabled: AI_MODEL_VALUE == "1",
+                apiKey: GEMINI_API_KEY_VALUE,
+                model: GEMINI_MODEL_VALUE,
                 // Endpoint structure: https://generativelanguage.googleapis.com/v1beta/models/{model}:{method}
                 apiBaseUrl: 'https://generativelanguage.googleapis.com/v1beta/models/',
                 promptTemplateBatch: `Analyze the following numbered list of tab data (Title, URL, Description) and assign a concise category (1-2 words, Title Case) for EACH tab.
