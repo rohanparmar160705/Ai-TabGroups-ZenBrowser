@@ -1,12 +1,21 @@
 // VERSION 4.10.0 (Added tab multi-selection sort capability)
 (() => {
     // --- Configuration ---
+
+    // Preference Key for AI Model Selection
+    const AI_MODEL_PREF = "extensions.tabgroups.ai_model"; // '1' for Gemini, '2' for Ollama
+    // Preference Keys for AI Config
+    const OLLAMA_ENDPOINT_PREF = "extensions.tabgroups.ollama_endpoint";
+    const OLLAMA_MODEL_PREF = "extensions.tabgroups.ollama_model";
+    const GEMINI_API_KEY_PREF = "extensions.tabgroups.gemini_api_key";
+    const GEMINI_MODEL_PREF = "extensions.tabgroups.gemini_model";
+
     const CONFIG = {
         apiConfig: {
             ollama: {
-                endpoint: 'http://localhost:11434/api/generate',
-                enabled: false,
-                model: 'llama3.1:latest',
+                endpoint: OLLAMA_ENDPOINT_PREF,
+                enabled: AI_MODEL_PREF == 2,
+                model: OLLAMA_MODEL_PREF,
                 promptTemplateBatch: `Analyze the following numbered list of tab data (Title, URL, Description) and assign a concise category (1-2 words, Title Case) for EACH tab.
 
                 Existing Categories (Use these EXACT names if a tab fits):
@@ -37,9 +46,9 @@
                 Output:`
             },
             gemini: {
-                enabled: true,
-                apiKey: 'YOUR_GEMINI-API-KEY', // <<< --- PASTE YOUR KEY HERE --- >>> 
-                model: 'gemini-1.5-flash-latest',
+                enabled: AI_MODEL_PREF == 1,
+                apiKey: GEMINI_API_KEY_PREF,
+                model: GEMINI_MODEL_PREF,
                 // Endpoint structure: https://generativelanguage.googleapis.com/v1beta/models/{model}:{method}
                 apiBaseUrl: 'https://generativelanguage.googleapis.com/v1beta/models/',
                 promptTemplateBatch: `Analyze the following numbered list of tab data (Title, URL, Description) and assign a concise category (1-2 words, Title Case) for EACH tab.
