@@ -20,6 +20,7 @@
   {
     "type": "separator",
     "label": "Gemini",
+    "id": "gemini-separator",
     "conditions": [
       { "if": { "property": "extensions.tabgroups.ai_model", "value": 1 } }
     ]
