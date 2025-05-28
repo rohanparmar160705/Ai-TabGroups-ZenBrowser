@@ -47,6 +47,7 @@
   {
     "type": "separator",
     "label": "Ollama",
+    "id": "ollama-separator",
     "conditions": [
       { "if": { "property": "extensions.tabgroups.ai_model", "value": 2 } }
     ]
