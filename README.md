@@ -11,6 +11,13 @@ https://github.com/user-attachments/assets/fc792843-b1da-448e-ba00-63322a3d9c99
     If you already have a Tab Groups config you can skip this
   
 ## Setup and Install
+
+## Method 1:
+***Through [Sine](https://github.com/CosmoCreeper/Sine)***
+Settings Can be configured through the mod settings through the Sine UI
+
+
+## Method 2 (Manual) :
 - Copy and paste the `tab_sort_clear.uc.js` file to your `chrome/JS` folder.
 ### AI Setup
 1. For Gemini (RECOMMENDED)
