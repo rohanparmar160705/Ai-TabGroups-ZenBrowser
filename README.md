@@ -12,9 +12,10 @@ https://github.com/user-attachments/assets/fc792843-b1da-448e-ba00-63322a3d9c99
   
 ## Setup and Install
 
-## Method 1:
+## Method 1 (Recommended):
 ***Through [Sine](https://github.com/CosmoCreeper/Sine)***
 Settings Can be configured through the mod settings through the Sine UI
+*This also allows for Auto-Updates :D
 
 
 ## Method 2 (Manual) :
