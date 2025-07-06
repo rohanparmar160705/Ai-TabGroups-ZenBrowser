@@ -1,4 +1,3 @@
-// FINAL VERSION 4.9.2-ClearOnly-Minified (Removed Sort, Comments, Logs)
 (() => {
     const CONFIG = {
         styles: `
@@ -73,7 +72,7 @@
 
     const clearTabs = () => {
         try {
-            const currentWorkspaceId = window.ZenWorkspaces?.activeWorkspace;
+            const currentWorkspaceId = window.gZenWorkspaces?.activeWorkspace;
             if (!currentWorkspaceId) return;
             const groupSelector = `tab-group:has(tab[zen-workspace-id="${currentWorkspaceId}"])`;
             const tabsToClose = [];
@@ -155,25 +154,25 @@
     }
 
     function setupZenWorkspaceHooks() {
-        if (typeof ZenWorkspaces === 'undefined' || typeof ZenWorkspaces.clearButtonHooksApplied !== 'undefined') {
+        if (typeof gZenWorkspaces === 'undefined' || typeof gZenWorkspaces.clearButtonHooksApplied !== 'undefined') {
              return;
         }
-        ZenWorkspaces.originalClearButtonHooks = {
-            onTabBrowserInserted: ZenWorkspaces.onTabBrowserInserted,
-            updateTabsContainers: ZenWorkspaces.updateTabsContainers,
+        gZenWorkspaces.originalClearButtonHooks = {
+            onTabBrowserInserted: gZenWorkspaces.onTabBrowserInserted,
+            updateTabsContainers: gZenWorkspaces.updateTabsContainers,
         };
-        ZenWorkspaces.clearButtonHooksApplied = true;
+        gZenWorkspaces.clearButtonHooksApplied = true;
 
-        ZenWorkspaces.onTabBrowserInserted = function(event) {
-            if (typeof ZenWorkspaces.originalClearButtonHooks.onTabBrowserInserted === 'function') {
-                try { ZenWorkspaces.originalClearButtonHooks.onTabBrowserInserted.call(ZenWorkspaces, event); } catch (e) { /* Error handling removed */ }
+        gZenWorkspaces.onTabBrowserInserted = function(event) {
+            if (typeof gZenWorkspaces.originalClearButtonHooks.onTabBrowserInserted === 'function') {
+                try { gZenWorkspaces.originalClearButtonHooks.onTabBrowserInserted.call(gZenWorkspaces, event); } catch (e) { /* Error handling removed */ }
             }
             setTimeout(addButtonsToAllSeparators, 150);
         };
 
-        ZenWorkspaces.updateTabsContainers = function(...args) {
-            if (typeof ZenWorkspaces.originalClearButtonHooks.updateTabsContainers === 'function') {
-                try { ZenWorkspaces.originalClearButtonHooks.updateTabsContainers.apply(ZenWorkspaces, args); } catch (e) { /* Error handling removed */ }
+        gZenWorkspaces.updateTabsContainers = function(...args) {
+            if (typeof gZenWorkspaces.originalClearButtonHooks.updateTabsContainers === 'function') {
+                try { gZenWorkspaces.originalClearButtonHooks.updateTabsContainers.apply(gZenWorkspaces, args); } catch (e) { /* Error handling removed */ }
             }
             setTimeout(addButtonsToAllSeparators, 150);
         };
@@ -190,8 +189,8 @@
             const peripheryExists = !!document.querySelector('#tabbrowser-arrowscrollbox-periphery');
             const commandSetExists = !!document.querySelector("commandset#zenCommandSet");
             const gBrowserReady = typeof gBrowser !== 'undefined' && gBrowser.tabContainer;
-            const zenWorkspacesReady = typeof ZenWorkspaces !== 'undefined' && typeof ZenWorkspaces.activeWorkspace !== 'undefined';
-            const ready = gBrowserReady && commandSetExists && (separatorExists || peripheryExists) && zenWorkspacesReady;
+            const gZenWorkspacesReady = typeof gZenWorkspaces !== 'undefined' && typeof gZenWorkspaces.activeWorkspace !== 'undefined';
+            const ready = gBrowserReady && commandSetExists && (separatorExists || peripheryExists) && gZenWorkspacesReady;
 
             if (ready) {
                 clearInterval(initCheckInterval);

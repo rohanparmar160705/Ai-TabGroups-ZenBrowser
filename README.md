@@ -1,57 +1,49 @@
-# ✨ Ai Tab Groups for Zen Browser ✨
-‼️This is still Work-in-Progress ‼️
+# ✨ AI Tab Groups for Zen Browser ✨
+‼️ Breaks for Zen version <1.12.6b, Please use the latest script.
 
 https://github.com/user-attachments/assets/fc792843-b1da-448e-ba00-63322a3d9c99
 
-
 ## Pre-requisites
 - Enable userChrome Customizations:
-    In `about:config` go to `toolkit.legacyUserProfileCustomizations.stylesheets` and set it to True.
+    In `about:config` go to `toolkit.legacyUserProfileCustomizations.stylesheets` and set it to `true`.
 - Install and Setup the userChrome.js Loader from [Autoconfig](https://github.com/MrOtherGuy/fx-autoconfig/tree/master)
-- Install the Tab groups config from [Advanced Tab Groups](https://github.com/Anoms12/Advanced-Tab-Groups)
-    If you already have a TabGroup Config you can skip this
+- Install the Tab Groups config from [Advanced Tab Groups](https://github.com/Anoms12/Advanced-Tab-Groups)
+    If you already have a Tab Groups config you can skip this
   
 ## Setup and Install
-- Copy and paste the `tab_sort.uc.js` file to your `chrome/JS` folder.
+
+## Method 1 (Recommended):
+***Through [Sine](https://github.com/CosmoCreeper/Sine)***
+
+Settings Can be configured through the mod settings through the Sine UI
+*This also allows for Auto-Updates :D
+
+
+## Method 2 (Manual) :
+- Copy and paste the `tab_sort_clear.uc.js` file to your `chrome/JS` folder.
 ### AI Setup
 1. For Gemini (RECOMMENDED)
     - Set `gemini { enabled:true }` in `apiConfig` and `ollama { enabled:false }` in `apiConfig`
-    - Get an API Key from [Ai Studios](https://aistudio.google.com)
-    - Replace `YOUR_GEMINI_API_KEY` with the copied API key
-    - Dont change the gemini model since 2.0 has very low rate limits (unless you are rich ig)
+    - Get an API Key from [AI Studios](https://aistudio.google.com)
+    - Replace `YOUR_GEMINI-API-KEY` with the copied API key
+    - Don't change the Gemini model since 2.0 has very low rate limits (unless you are rich ig)
 2. For Ollama
     - Download and install [Ollama](https://ollama.com/)
-    - Install your prefered model. The script uses  `llama3.1` by default
-    - Set  `ollama { enabled:true }` in `apiConfig` and  `gemini { enabled:false }` in `apiConfig`
+    - Install your preferred model. The script uses `llama3.1` by default
+    - Set `ollama { enabled:true }` in `apiConfig` and `gemini { enabled:false }` in `apiConfig`
     - Set the model you downloaded in ollama.model: in the config (you can see the models by doing `ollama list` in terminal)
-- Open Zen browser, go to `about:support` and clear start up cache.
+- Make sure `browser.tabs.groups.smart.enabled` is set to `false` in `about:config`
+- Open Zen browser, go to `about:support` and clear the startup cache.
 - Done. Enjoy ^^
 
 
 ## How it works?
-
-The script uses a more sophisticated multi-stage process to group your tabs:
-
-1.  **Phase 1: Deterministic Pre-Grouping (Strong Signals):**
-    *   **Opened From Same Tab:** Groups tabs that were opened from the same parent tab.
-    *   **Content Type:** Identifies common content types (e.g., "Dev Docs", "Spreadsheet", "Social Media") based on URL and title patterns, then groups them.
-    *   **Keywords & Hostnames:** Groups tabs sharing common keywords in their titles or identical hostnames (e.g., "github.com").
-
-2.  **Phase 2: Similarity-Based Pre-Grouping (TF-IDF):**
-    *   For tabs not caught by Phase 1, it analyzes the text content (title and description) using **TF-IDF** (Term Frequency-Inverse Document Frequency) and **Cosine Similarity**.
-    *   Tabs with highly similar text content are grouped together.
-
-3.  **Phase 3: AI-Powered Grouping:**
-    *   Any tabs *still* ungrouped are sent to the configured AI (Gemini or Ollama).
-    *   The AI is given the context of all previously formed groups (from Phase 1 & 2) and suggests categories for the remaining tabs, either fitting them into existing groups or proposing new ones.
-
-4.  **Consolidation:**
-    *   Finally, all generated group names are checked for near-duplicates (e.g., "Project Doc" and "Project Docs") using Levenshtein distance, and similar names are merged to ensure consistency.
-
-*   The script primarily uses tab titles, URLs, and descriptions for context.
-*   Groups are generally formed if they meet a minimum tab count (default is 2), though AI-derived groups might be created for single important tabs.
-*   You can customize AI prompts and other settings in the configuration.
-*   The "Clear" button only clears ungrouped, non-pinned tabs in the current workspace.
+- The script has two phases, first it manually sorts tabs that have common words in their title and URL, second it uses the AI to sort rest of the tabs and checks if they fit in the existing groups (that were manually created) or if it should create a new group.
+- The script only fetches the tabs full URL and title, thus it prioritizes the title first for main context and URL for sub context.
+- The sort function only works when there is two or more tabs to sort into a group.
+- You can also have a selected group of tabs sorted as well, this allows you to have fine-grained control over the sorting (works for tabs that are already grouped as well, they may be re-sorted).
+- You are free to change the AI prompt to your suitable workflow. The prompt is at the top in `apiConfig`.
+- The `Clear` button only clears un-grouped non-pinned tabs.
 
 **Peace <3**
 
