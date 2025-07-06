@@ -1,7 +1,7 @@
 [
   {
     "property": "extensions.tabgroups.ai_model",
-    "label": "Choose AI - Gemini or Ollama",
+    "label": "Choose AI - Gemini, Ollama, or Mistral",
     "type": "dropdown",
     "placeholder": false,
     "value": "number",
@@ -14,6 +14,10 @@
       {
         "value": 2,
         "label": "Ollama"
+      },
+      {
+        "value": 3,
+        "label": "Mistral"
       }
     ]
   },
@@ -70,6 +74,33 @@
     "placeholder": "Enter your Ollama Model here",
     "conditions": [
       { "if": { "property": "extensions.tabgroups.ai_model", "value": 2 } }
+    ]
+  },
+  {
+    "type": "separator",
+    "label": "Mistral",
+    "id": "mistral-separator",
+    "conditions": [
+      { "if": { "property": "extensions.tabgroups.ai_model", "value": 3 } }
+    ]
+  },
+  {
+    "property": "extensions.tabgroups.mistral_api_key",
+    "label": "Mistral API Key",
+    "type": "string",
+    "placeholder": "Enter your Mistral API key here",
+    "conditions": [
+      { "if": { "property": "extensions.tabgroups.ai_model", "value": 3 } }
+    ]
+  },
+  {
+    "property": "extensions.tabgroups.mistral_model",
+    "label": "Mistral Model to Use For Renaming",
+    "default": "mistral-large-latest",
+    "type": "string",
+    "placeholder": "Enter your Mistral Model here",
+    "conditions": [
+      { "if": { "property": "extensions.tabgroups.ai_model", "value": 3 } }
     ]
   }
 ]
