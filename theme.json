@@ -1,6 +1,6 @@
 {
     "id": "ai-tabgroups-zenbrowser",
-    "name": "Tab Sort Clear AI",
+    "name": "Tidy Tabs",
     "description": "The script sorts the temporary tabs into tabgroups using ai for a more cleaner organized browsing experience. Inspired by Arc Max Tidy feature. ",
     "homepage": "https://github.com/Darsh-A/Ai-TabGroups-ZenBrowser",
     "preferences": "https://raw.githubusercontent.com/Darsh-A/Ai-TabGroups-ZenBrowser/main/preferences.json",
@@ -8,7 +8,7 @@
     "js": true,
     "readme": "https://raw.githubusercontent.com/Darsh-A/Ai-TabGroups-ZenBrowser/refs/heads/main/README.md",
     "author": "Darsh A",
-    "version": "1.1.0",
+    "version": "4.1.0",
     "tags": [
         "sine",
         "Tab Sort Clear",
