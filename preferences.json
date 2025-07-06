@@ -41,7 +41,7 @@
   {
     "property": "extensions.tabgroups.gemini_model",
     "label": "Gemini Model to Use For Renaming",
-    "default": "gemini-1.5-flash-latest",
+    "default": "gemini-2.0-flash",
     "type": "string",
     "placeholder": "Enter your Gemini Model here",
     "conditions": [
