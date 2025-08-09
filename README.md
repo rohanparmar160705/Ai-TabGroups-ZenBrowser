@@ -1,6 +1,6 @@
 # ✨ AI Tab Groups for Zen Browser ✨
 
-## With the official release of Zen folders, the project is under-development again to adapt to the new changes
+## ⚠️With the official release of Zen folders, the project is under-development again to adapt to the new changes ⚠️
 
 ‼️ Breaks for Zen version <1.14.6b, Please use the latest script.
 
