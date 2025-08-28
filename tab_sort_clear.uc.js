@@ -193,15 +193,16 @@
             position: absolute;
             /* Simple, stable positioning. The parent container's right edge never moves. */
             right: 55px; 
+            top: 50%;
+            transform: translateY(-50%);
             font-size: 12px;
             width: 60px;
+            height: auto;
             pointer-events: auto;
-            align-self: end;
             appearance: none;
-            margin-top: -8px;
-            padding: 1px;
+            padding: 2px 4px;
             color: gray;
-            z-index: 1; /* Ensure buttons are on top of the visual bar */
+            z-index: 10; /* Higher z-index to ensure buttons are on top */
             label { display: block; }
         }
         #sort-button:hover {
@@ -215,15 +216,16 @@
             transition: opacity 0.1s ease-in-out;
             position: absolute;
             right: 0; /* Simple and stable */
+            top: 50%;
+            transform: translateY(-50%);
             font-size: 12px;
             width: 60px;
+            height: auto;
             pointer-events: auto;
-            align-self: end;
             appearance: none;
-            margin-top: -8px;
-            padding: 1px;
+            padding: 2px 4px;
             color: grey;
-            z-index: 1; /* Ensure buttons are on top of the visual bar */
+            z-index: 10; /* Higher z-index to ensure buttons are on top */
             label { display: block; }
         }
         #clear-button:hover {
@@ -232,15 +234,19 @@
             border-radius: 4px;
         }
         
-        .pinned-tabs-container-separator {
-             display: flex !important;
-             flex-direction: column;
-             margin-left: 0;
-             min-height: 1px;
-             padding-top: 0.4px;
-             padding-bottom: 0.4px;
-             position: relative; /* Acts as the anchor for children */
-             background-color: transparent !important; /* The container itself is invisible */
+        /*======== sort-button , clear-button ============*/
+        .pinned-tabs-container-separator{
+            height: 100% !important;
+            transition: all .2s ease-in-out !important;
+            display: flex !important;
+            flex-direction: column;
+            margin-left: 0;
+            min-height: 1px;
+            padding-top: 0.4px;
+            padding-bottom: 0.4px;
+            position: relative; /* Acts as the anchor for children */
+            background-color: transparent !important; /* The container itself is invisible */
+            overflow: visible !important; /* Ensure buttons don't get clipped */
         }
         
         .pinned-tabs-container-separator::before {
@@ -1212,15 +1218,17 @@
         } finally {
             isSorting = false; // Ensure sorting flag is reset
 
-            // Remove loading indicator class
+            // Remove loading indicator class with a minimum display time
             if (separatorsToSort.length > 0) {
-                console.log("Removing sorting indicator from separator(s)...");
-                separatorsToSort.forEach(sep => {
-                    // Check if element still exists before removing class
-                    if (sep && sep.isConnected) {
-                         sep.classList.remove('separator-is-sorting');
-                    }
-                });
+                console.log("Removing sorting indicator from separator(s) after minimum display time...");
+                setTimeout(() => {
+                    separatorsToSort.forEach(sep => {
+                        // Check if element still exists before removing class
+                        if (sep && sep.isConnected) {
+                             sep.classList.remove('separator-is-sorting');
+                        }
+                    });
+                }, 2000); // Minimum 2 seconds to ensure animation is visible
             }
 
             // Remove tab loading indicators after a delay
