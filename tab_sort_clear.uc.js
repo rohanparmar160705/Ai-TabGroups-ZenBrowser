@@ -260,13 +260,23 @@
             transition: width 0.1s ease-in-out, background-color 0.3s ease-out;
         }
         
+        /* Disable hover width tweak when actively sorting to avoid overriding animation */
+        .pinned-tabs-container-separator.separator-is-sorting:has(#sort-button):has(#clear-button):hover::before {
+            width: 100% !important;
+        }
         .pinned-tabs-container-separator:has(#sort-button):has(#clear-button):hover::before {
             width: calc(100% - 115px);
             background-color: var(--lwt-toolbarbutton-hover-background, rgba(200, 200, 200, 0.2));
         }
+        .pinned-tabs-container-separator.separator-is-sorting:has(#sort-button):not(:has(#clear-button)):hover::before {
+            width: 100% !important;
+        }
         .pinned-tabs-container-separator:has(#sort-button):not(:has(#clear-button)):hover::before {
             width: calc(100% - 65px);
             background-color: var(--lwt-toolbarbutton-hover-background, rgba(200, 200, 200, 0.2));
+        }
+        .pinned-tabs-container-separator.separator-is-sorting:not(:has(#sort-button)):has(#clear-button):hover::before {
+            width: 100% !important;
         }
         .pinned-tabs-container-separator:not(:has(#sort-button)):has(#clear-button):hover::before {
             width: calc(100% - 60px);
@@ -282,28 +292,119 @@
             margin-top: 5px !important;
             margin-bottom: 8px !important;
         }
+        .zen-workspace-tabs-section[hide-separator] .pinned-tabs-container-separator.separator-is-sorting:hover::before {
+             background-color: transparent !important;
+        }
         .zen-workspace-tabs-section[hide-separator] .pinned-tabs-container-separator:hover::before {
              background-color: var(--lwt-toolbarbutton-hover-background, rgba(200, 200, 200, 0.2));
+        }
+        .zen-workspace-tabs-section[hide-separator] .pinned-tabs-container-separator.separator-is-sorting:has(#sort-button):has(#clear-button):hover::before {
+             width: 100% !important;
         }
         .zen-workspace-tabs-section[hide-separator] .pinned-tabs-container-separator:has(#sort-button):has(#clear-button):hover::before {
              width: calc(100% - 115px);
         }
+        .zen-workspace-tabs-section[hide-separator] .pinned-tabs-container-separator.separator-is-sorting:has(#sort-button):not(:has(#clear-button)):hover::before {
+             width: 100% !important;
+        }
         .zen-workspace-tabs-section[hide-separator] .pinned-tabs-container-separator:has(#sort-button):not(:has(#clear-button)):hover::before {
              width: calc(100% - 65px);
+        }
+        .zen-workspace-tabs-section[hide-separator] .pinned-tabs-container-separator.separator-is-sorting:not(:has(#sort-button)):has(#clear-button):hover::before {
+             width: 100% !important;
         }
         .zen-workspace-tabs-section[hide-separator] .pinned-tabs-container-separator:not(:has(#sort-button)):has(#clear-button):hover::before {
              width: calc(100% - 60px);
         }
         
-        @keyframes pulse-separator-bg {
-            0% { background-color: var(--lwt-toolbarbutton-border-color, rgb(255, 141, 141)); }
-            50% { background-color: var(--lwt-toolbarbutton-hover-background, rgba(137, 178, 255, 0.91)); }
-            100% { background-color: var(--lwt-toolbarbutton-border-color, rgb(142, 253, 238)); }
+
+
+        /* Additional style to ensure separator is visible during sorting */
+        .separator-is-sorting {
+            position: relative;
+            overflow: visible !important;
+            /* Remove background from the main element to avoid overlap */
         }
-        .separator-is-sorting::before {
-            animation: pulse-separator-bg 1.5s ease-in-out infinite;
-            will-change: background-color;
+        /* Fallback: use the same CSS variable on the element itself */
+        .pinned-tabs-container-separator.separator-is-sorting {
+            background-image: none !important;
+            background-color: var(--sorting-color, #ebbcba);
         }
+        
+        /* Ensure buttons work properly during sorting - don't force visibility */
+        .separator-is-sorting #sort-button,
+        .separator-is-sorting #clear-button {
+            z-index: 200 !important;
+            pointer-events: auto !important;
+            /* Let normal hover behavior control opacity and styling */
+        }
+        
+        /* Make sure the separator background adjusts for buttons during sorting ONLY when hovered */
+        .separator-is-sorting:hover:has(#sort-button):has(#clear-button)::before {
+            width: calc(100% - 115px) !important;
+        }
+        .separator-is-sorting:hover:has(#sort-button):not(:has(#clear-button))::before {
+            width: calc(100% - 65px) !important;
+        }
+        .separator-is-sorting:hover:not(:has(#sort-button)):has(#clear-button)::before {
+            width: calc(100% - 60px) !important;
+        }
+        
+
+
+        
+        /* While sorting, neutralize the original ::before so hover/theme styles can't override */
+        .pinned-tabs-container-separator.separator-is-sorting::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            background: transparent !important;
+        }
+
+        /* Dedicated overlay for sorting animation */
+        .pinned-tabs-container-separator.separator-is-sorting::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            pointer-events: none;
+            z-index: 2;
+            background-image: none !important;
+            background-color: var(--sorting-color, #ebbcba);
+            border-radius: 1px;
+            opacity: 0.9 !important;
+            transition: width 0.1s ease-in-out;
+        }
+
+        /* Make the animated overlay shrink when hovering over buttons */
+        .pinned-tabs-container-separator.separator-is-sorting:has(#sort-button):has(#clear-button):hover::after {
+            width: calc(100% - 115px);
+        }
+        .pinned-tabs-container-separator.separator-is-sorting:has(#sort-button):not(:has(#clear-button)):hover::after {
+            width: calc(100% - 65px);
+        }
+        .pinned-tabs-container-separator.separator-is-sorting:not(:has(#sort-button)):has(#clear-button):hover::after {
+            width: calc(100% - 60px);
+        }
+
+        /* For zen-workspace-tabs-section with hide-separator */
+        .zen-workspace-tabs-section[hide-separator] .pinned-tabs-container-separator.separator-is-sorting:has(#sort-button):has(#clear-button):hover::after {
+            width: calc(100% - 115px);
+        }
+        .zen-workspace-tabs-section[hide-separator] .pinned-tabs-container-separator.separator-is-sorting:has(#sort-button):not(:has(#clear-button)):hover::after {
+            width: calc(100% - 65px);
+        }
+        .zen-workspace-tabs-section[hide-separator] .pinned-tabs-container-separator.separator-is-sorting:not(:has(#sort-button)):has(#clear-button):hover::after {
+            width: calc(100% - 60px);
+        }
+        /* Remove hover interference: animated color stays visible while sorting */
+        .pinned-tabs-container-separator.separator-is-sorting:hover::before { background-image: none !important; }
+        
         .tab-closing {
             animation: fadeUp 0.5s forwards;
         }
@@ -823,7 +924,41 @@
              separatorsToSort = document.querySelectorAll('.pinned-tabs-container-separator');
              if(separatorsToSort.length > 0) {
                  console.log("Applying sorting indicator to separator(s)...");
-                 separatorsToSort.forEach(sep => sep.classList.add('separator-is-sorting'));
+                 separatorsToSort.forEach(sep => {
+                     sep.classList.add('separator-is-sorting');
+                     // Force a reflow to ensure the animation starts immediately
+                     sep.offsetHeight;
+                     console.log("Animation class added to separator:", sep, "Classes:", sep.className);
+                     try {
+                         const elemStyles = getComputedStyle(sep);
+                         const beforeStyles = getComputedStyle(sep, '::before');
+                         const afterStyles = getComputedStyle(sep, '::after');
+                         console.log("Separator computed styles:", {
+                             elementAnimationName: elemStyles?.animationName,
+                             elementBackgroundColor: elemStyles?.backgroundColor,
+                             beforeAnimationName: beforeStyles?.animationName,
+                             beforeBackgroundColor: beforeStyles?.backgroundColor,
+                             beforeBackgroundImage: beforeStyles?.backgroundImage,
+                             afterAnimationName: afterStyles?.animationName,
+                             afterBackgroundColor: afterStyles?.backgroundColor,
+                             afterBackgroundImage: afterStyles?.backgroundImage
+                         });
+                                                 // Start JS-driven color cycle using a CSS variable
+                        const colors = ['#ebbcba', '#c4a7e7', '#9ccfd8'];
+                        let colorIndex = 0;
+                        if (sep._sortingColorInterval) {
+                            clearInterval(sep._sortingColorInterval);
+                        }
+                        // Set initial color immediately
+                        sep.style.setProperty('--sorting-color', colors[0]);
+                        sep._sortingColorInterval = setInterval(() => {
+                            colorIndex = (colorIndex + 1) % colors.length;
+                            sep.style.setProperty('--sorting-color', colors[colorIndex]);
+                        }, 500);
+                     } catch (e) {
+                         console.warn("Could not read computed styles for separator:", e);
+                     }
+                 });
              } else {
                   console.warn("Could not find separator element to apply sorting indicator.");
              }
@@ -1226,9 +1361,14 @@
                         // Check if element still exists before removing class
                         if (sep && sep.isConnected) {
                              sep.classList.remove('separator-is-sorting');
+                             if (sep._sortingColorInterval) {
+                                 clearInterval(sep._sortingColorInterval);
+                                 sep._sortingColorInterval = null;
+                                 sep.style.removeProperty('--sorting-color');
+                             }
                         }
                     });
-                }, 2000); // Minimum 2 seconds to ensure animation is visible
+                }, 3000); // Minimum 3 seconds to ensure animation is visible
             }
 
             // Remove tab loading indicators after a delay
