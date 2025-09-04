@@ -1,5 +1,24 @@
 [
   {
+    "type": "separator",
+    "label": "Feature Toggles",
+    "id": "toggles-seperator"
+  },
+  {
+    "property": "extensions.tabgroups.enable_sort",
+    "label": "Enable the sort tabs button.",
+    "type": "checkbox",
+    "defaultValue": true,
+    "restart": true
+  },
+    {
+    "property": "extensions.tabgroups.enable_clear",
+    "label": "Enable the sort tabs button.",
+    "type": "checkbox",
+    "defaultValue": true,
+    "restart": true 
+  },
+  {
     "property": "extensions.tabgroups.ai_model",
     "label": "Choose AI - Gemini, Ollama, or Mistral",
     "type": "dropdown",
@@ -19,6 +38,9 @@
         "value": 3,
         "label": "Mistral"
       }
+    ],
+    "conditions": [
+      { "if": { "property": "extensions.tabgroups.enable_sort", "value":true}}
     ]
   },
   {
@@ -26,8 +48,10 @@
     "label": "Gemini",
     "id": "gemini-separator",
     "conditions": [
-      { "if": { "property": "extensions.tabgroups.ai_model", "value": 1 } }
-    ]
+      { "if": { "property": "extensions.tabgroups.ai_model", "value": 1 }}, 
+      { "if": { "property": "extensions.tabgroups.enable_sort", "value":true}}
+    ],
+    "operator": "AND"
   },
   {
     "property": "extensions.tabgroups.gemini_api_key",
@@ -35,8 +59,10 @@
     "type": "string",
     "placeholder": "Enter your Gemini API key here",
     "conditions": [
-      { "if": { "property": "extensions.tabgroups.ai_model", "value": 1 } }
-    ]
+      { "if": { "property": "extensions.tabgroups.ai_model", "value": 1 } }, 
+      { "if": { "property": "extensions.tabgroups.enable_sort", "value":true}}
+    ],
+    "operator": "AND"
   },
   {
     "property": "extensions.tabgroups.gemini_model",
@@ -45,16 +71,20 @@
     "type": "string",
     "placeholder": "Enter your Gemini Model here",
     "conditions": [
-      { "if": { "property": "extensions.tabgroups.ai_model", "value": 1 } }
-    ]
+      { "if": { "property": "extensions.tabgroups.ai_model", "value": 1 } }, 
+      { "if": { "property": "extensions.tabgroups.enable_sort", "value":true}}
+    ],
+    "operator": "AND"
   },
   {
     "type": "separator",
     "label": "Ollama",
     "id": "ollama-separator",
     "conditions": [
-      { "if": { "property": "extensions.tabgroups.ai_model", "value": 2 } }
-    ]
+      { "if": { "property": "extensions.tabgroups.ai_model", "value": 2 } }, 
+      { "if": { "property": "extensions.tabgroups.enable_sort", "value":true}}
+    ],
+    "operator": "AND"
   },
   {
     "property": "extensions.tabgroups.ollama_endpoint",
@@ -63,8 +93,10 @@
     "type": "string",
     "placeholder": "Enter your Ollama Endpoint URL here",
     "conditions": [
-      { "if": { "property": "extensions.tabgroups.ai_model", "value": 2 } }
-    ]
+      { "if": { "property": "extensions.tabgroups.ai_model", "value": 2 } }, 
+      { "if": { "property": "extensions.tabgroups.enable_sort", "value":true}}
+    ],
+    "operator": "AND"
   },
   {
     "property": "extensions.tabgroups.ollama_model",
@@ -73,16 +105,20 @@
     "type": "string",
     "placeholder": "Enter your Ollama Model here",
     "conditions": [
-      { "if": { "property": "extensions.tabgroups.ai_model", "value": 2 } }
-    ]
+      { "if": { "property": "extensions.tabgroups.ai_model", "value": 2 } }, 
+      { "if": { "property": "extensions.tabgroups.enable_sort", "value":true}}
+    ],
+    "operator": "AND"
   },
   {
     "type": "separator",
     "label": "Mistral",
     "id": "mistral-separator",
     "conditions": [
-      { "if": { "property": "extensions.tabgroups.ai_model", "value": 3 } }
-    ]
+      { "if": { "property": "extensions.tabgroups.ai_model", "value": 3 } }, 
+      { "if": { "property": "extensions.tabgroups.enable_sort", "value":true}}
+    ],
+    "operator": "AND"
   },
   {
     "property": "extensions.tabgroups.mistral_api_key",
@@ -90,8 +126,10 @@
     "type": "string",
     "placeholder": "Enter your Mistral API key here",
     "conditions": [
-      { "if": { "property": "extensions.tabgroups.ai_model", "value": 3 } }
-    ]
+      { "if": { "property": "extensions.tabgroups.ai_model", "value": 3 } }, 
+      { "if": { "property": "extensions.tabgroups.enable_sort", "value":true}}
+    ],
+    "operator": "AND"
   },
   {
     "property": "extensions.tabgroups.mistral_model",
@@ -100,7 +138,9 @@
     "type": "string",
     "placeholder": "Enter your Mistral Model here",
     "conditions": [
-      { "if": { "property": "extensions.tabgroups.ai_model", "value": 3 } }
-    ]
+      { "if": { "property": "extensions.tabgroups.ai_model", "value": 3 } }, 
+      { "if": { "property": "extensions.tabgroups.enable_sort", "value":true}}
+    ],
+    "operator": "AND"
   }
 ]

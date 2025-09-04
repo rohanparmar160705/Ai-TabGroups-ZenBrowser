@@ -2,6 +2,9 @@
 (() => {
     // --- Configuration ---
 
+    // Feature toggle preference keys
+    const ENABLE_SORT_PREF = "extensions.tabgroups.enable_sort";
+    const ENABLE_CLEAR_PREF = "extensions.tabgroups.enable_clear";
     // Preference Key for AI Model Selection
     const AI_MODEL_PREF = "extensions.tabgroups.ai_model"; // '1' for Gemini, '2' for Ollama, '3' for Mistral
     // Preference Keys for AI Config
@@ -33,6 +36,8 @@
     };
 
     // Read preference values
+    const ENABLE_SORT_VALUE = getPref(ENABLE_SORT_PREF, true);
+    const ENABLE_CLEAR_VALUE = getPref(ENABLE_CLEAR_PREF, true);
     const AI_MODEL_VALUE = getPref(AI_MODEL_PREF, "1"); // Default to Gemini
     const OLLAMA_ENDPOINT_VALUE = getPref(OLLAMA_ENDPOINT_PREF, "http://localhost:11434/api/generate");
     const OLLAMA_MODEL_VALUE = getPref(OLLAMA_MODEL_PREF, "llama3.2");
@@ -42,6 +47,10 @@
     const MISTRAL_MODEL_VALUE = getPref(MISTRAL_MODEL_PREF, "mistral-large-latest");
 
     const CONFIG = {
+        featureConfig: {
+            sort: ENABLE_SORT_VALUE,
+            clear: ENABLE_CLEAR_VALUE
+        },
         apiConfig: {
             ollama: {
                 endpoint: OLLAMA_ENDPOINT_VALUE,
@@ -1455,7 +1464,7 @@
         if (!container) return;
 
         // Ensure Sort Button
-        if (!container.querySelector('#sort-button')) {
+        if (!container.querySelector('#sort-button') && CONFIG.featureConfig.sort) {
             try {
                 const buttonFragment = window.MozXULElement.parseXULToFragment(
                     `<toolbarbutton id="sort-button" command="cmd_zenSortTabs" label="⇅ Sort" tooltiptext="Sort Tabs into Groups by Topic (AI)"/>`
@@ -1468,7 +1477,7 @@
         }
 
         // Ensure Clear Button
-        if (!container.querySelector('#clear-button')) {
+        if (!container.querySelector('#clear-button') && CONFIG.featureConfig.clear) {
             try {
                 const buttonFragment = window.MozXULElement.parseXULToFragment(
                     `<toolbarbutton id="clear-button" command="cmd_zenClearTabs" label="↓ Clear" tooltiptext="Close ungrouped, non-pinned tabs"/>`
@@ -1505,7 +1514,7 @@
         }
 
         // Add Sort Command if missing
-        if (!zenCommands.querySelector("#cmd_zenSortTabs")) {
+        if (!zenCommands.querySelector("#cmd_zenSortTabs") && CONFIG.featureConfig.sort) {
             try {
                 const cmd = window.MozXULElement.parseXULToFragment(`<command id="cmd_zenSortTabs"/>`).firstChild;
                 zenCommands.appendChild(cmd);
@@ -1516,7 +1525,7 @@
         }
 
         // Add Clear Command if missing
-        if (!zenCommands.querySelector("#cmd_zenClearTabs")) {
+        if (!zenCommands.querySelector("#cmd_zenClearTabs") && CONFIG.featureConfig.clear) {
             try {
                 const cmd = window.MozXULElement.parseXULToFragment(`<command id="cmd_zenClearTabs"/>`).firstChild;
                 zenCommands.appendChild(cmd);
